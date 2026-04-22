@@ -1,0 +1,120 @@
+<!DOCTYPE html><html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ibom Sports Hub</title>
+<style>
+body { margin:0; font-family: Arial, Helvetica, sans-serif; background:#fff; color:#111; }
+.top-banner { background:red; color:white; text-align:center; padding:10px; font-weight:bold; cursor:pointer; }
+header { display:flex; align-items:center; justify-content:space-between; padding:15px 30px; border-bottom:1px solid #ddd; }
+.logo { display:flex; align-items:center; gap:10px; }
+.logo img { height:40px; }
+.collections { padding:30px; }
+.grid { display:flex; gap:30px; }
+.card { cursor:pointer; text-align:center; }
+.card img { width:250px; height:250px; object-fit:cover; border-radius:10px; }
+.section { display:none; padding:30px; }
+.product img { width:300px; }
+button { padding:10px 15px; border:none; cursor:pointer; margin-top:10px; }
+.qty { display:flex; align-items:center; gap:10px; margin-top:10px; }
+.qty button { width:30px; height:30px; }
+.order-btn { background:black; color:white; }
+.payment { display:none; padding:30px; }
+.bank-box { border:1px solid #000; padding:20px; margin-top:20px; }
+</style>
+</head>
+<body><div class="top-banner" onclick="window.open('https://www.instagram.com/ibomsportshub1?igsh=YzdqbjUxa2NrdWQ1','_blank')">
+CLICK HERE TO VIEW INSTAGRAM CHANNEL
+</div><header>
+<div class="logo">
+<img src="logo.png" alt="logo">
+<h2>IBOM SPORTS HUB</h2>
+</div>
+</header><div id="home" class="collections">
+<h2>Collections</h2>
+<div class="grid">
+<div class="card" onclick="showSection('boots')">
+<img src="photo1.jpg" alt="Boots">
+<h3>Boots</h3>
+</div>
+<div class="card" onclick="showSection('gear')">
+<img src="photo2.jpg" alt="Gear">
+<h3>Gear</h3>
+</div>
+</div>
+</div><div id="boots" class="section">
+<div class="product">
+<img src="photo3.jpg">
+<h3>Adidas Predator 26 Elite FT FG</h3>
+<p>Core Black/ Cloud White/ Lucid Red</p>
+<p>N45000</p>
+<div class="qty">
+<button onclick="changeQty('bootQty',-1)">-</button>
+<span id="bootQty">1</span>
+<button onclick="changeQty('bootQty',1)">+</button>
+</div>
+<button class="order-btn" onclick="showPayment('boot')">ORDER</button>
+</div>
+</div><div id="gear" class="section">
+<div class="product">
+<img src="photo4.jpg">
+<h3>Grip Socks</h3>
+<p>Black/ White/ Grey</p>
+<p>N3500</p>
+<div class="qty">
+<button onclick="changeQty('gearQty',-1)">-</button>
+<span id="gearQty">1</span>
+<button onclick="changeQty('gearQty',1)">+</button>
+</div>
+<button class="order-btn" onclick="showPayment('gear')">ORDER</button>
+</div>
+</div><div id="payment" class="payment">
+<h2>Payment Method</h2>
+<button onclick="showBank()">Bank Transfer</button>
+<div id="bankDetails" class="bank-box" style="display:none;"></div>
+</div><script>
+function showSection(section) {
+    history.pushState({}, "", section);
+    document.getElementById('home').style.display='none';
+    document.getElementById(section).style.display='block';
+}
+
+function changeQty(id, change) {
+let qty = document.getElementById(id);
+let val = parseInt(qty.innerText);
+val += change;
+if(val < 1) val = 1;
+qty.innerText = val;
+}
+
+function showPayment(type) {
+    history.pushState({}, "", "payment");
+    document.querySelectorAll('.section').forEach(s => s.style.display='none');
+    document.getElementById('payment').style.display='block';
+
+    let price = type === 'boot' ? 'N45000' : 'N3500';
+    window.currentPrice = price;
+}
+
+function showBank() {
+document.getElementById('bankDetails').style.display='block';
+document.getElementById('bankDetails').innerHTML = `
+<p><strong>PRICE:</strong> ${window.currentPrice}</p>
+<p><strong>BANK NAME:</strong> OPAY</p>
+<p><strong>ACCOUNT NUMBER:</strong> 6422568271</p>
+<p><strong>ACCOUNT NAME:</strong> EFIOYOH AMOS IDEH</p>
+<button onclick="completePayment()">I HAVE MADE PAYMENT</button>
+`;
+}
+
+function completePayment() {
+document.getElementById('payment').style.display='none';
+document.getElementById('home').style.display='block';
+}
+
+window.onpopstate = function () {
+    document.querySelectorAll('.section, .payment').forEach(s => s.style.display = 'none');
+    document.getElementById('home').style.display = 'block';
+};
+</script></body>
+  </html>
